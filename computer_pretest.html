@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบทดสอบก่อนเรียน - พื้นฐานการใช้คอมพิวเตอร์และเทคโนโลยีดิจิทัล</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .form-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9ff;
+            border-radius: 12px;
+            border-left: 5px solid #4facfe;
+        }
+        
+        .section-title {
+            font-size: 1.4em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .question {
+            background: white;
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e1e8f0;
+        }
+        
+        .question-text {
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        
+        .question-number {
+            color: #4facfe;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: #f8f9ff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option:hover {
+            background: #e8f0fe;
+            transform: translateX(5px);
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+            accent-color: #4facfe;
+        }
+        
+        .option.selected {
+            background: #e8f0fe;
+            border-color: #4facfe;
+            color: #2c3e50;
+        }
+        
+        .submit-section {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9ff;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+        }
+        
+        .results {
+            display: none;
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        
+        .score {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .score-text {
+            font-size: 1.2em;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .form-content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔹 แบบทดสอบก่อนเรียน (Pre-test)</h1>
+            <p>เรื่อง: พื้นฐานการใช้คอมพิวเตอร์และเทคโนโลยีดิจิทัล (ม.1)</p>
+        </div>
+        
+        <div class="form-content">
+            <form id="testForm">
+                <!-- ส่วนที่ 1: องค์ประกอบของคอมพิวเตอร์ -->
+                <div class="section">
+                    <h2 class="section-title">ส่วนที่ 1: องค์ประกอบของคอมพิวเตอร์</h2>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">1.</span>ส่วนใดทำหน้าที่เป็นสมองของคอมพิวเตอร์</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q1" value="a"> ก. เมาส์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1" value="b"> ข. คีย์บอร์ด
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1" value="c"> ค. ซีพียู (CPU)
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q1" value="d"> ง. จอภาพ
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">2.</span>อุปกรณ์ใดเป็นหน่วยรับข้อมูล (Input)</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q2" value="a"> ก. เครื่องพิมพ์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2" value="b"> ข. เมาส์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2" value="c"> ค. ลำโพง
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q2" value="d"> ง. จอภาพ
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">3.</span>ฮาร์ดแวร์ข้อใดใช้สำหรับเก็บข้อมูลถาวร</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q3" value="a"> ก. RAM
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3" value="b"> ข. ฮาร์ดดิสก์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3" value="c"> ค. หน่วยประมวลผลกลาง
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q3" value="d"> ง. การ์ดจอ
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">4.</span>ซอฟต์แวร์ระบบ (System Software) คืออะไร</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q4" value="a"> ก. โปรแกรมที่ใช้จัดการฮาร์ดแวร์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4" value="b"> ข. โปรแกรมที่ใช้พิมพ์งาน
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4" value="c"> ค. โปรแกรมที่ใช้เล่นเกม
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q4" value="d"> ง. โปรแกรมที่ใช้ตัดต่อรูปภาพ
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">5.</span>โปรแกรมใดเป็นซอฟต์แวร์ประยุกต์ (Application Software)</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q5" value="a"> ก. Windows
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5" value="b"> ข. Linux
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5" value="c"> ค. Microsoft Word
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q5" value="d"> ง. macOS
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ส่วนที่ 2: เทคโนโลยีดิจิทัล -->
+                <div class="section">
+                    <h2 class="section-title">ส่วนที่ 2: เทคโนโลยีดิจิทัล</h2>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">6.</span>ข้อมูล (Data) หมายถึงข้อใด</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q6" value="a"> ก. ตัวเลข ตัวอักษร สัญลักษณ์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6" value="b"> ข. ข้อความที่ผ่านการวิเคราะห์แล้ว
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6" value="c"> ค. ความรู้ที่สามารถนำไปใช้ได้ทันที
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q6" value="d"> ง. คำตอบที่สรุปเรียบร้อย
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">7.</span>อินเทอร์เน็ตหมายถึงอะไร</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q7" value="a"> ก. โปรแกรมพิมพ์งาน
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7" value="b"> ข. เครือข่ายคอมพิวเตอร์ที่เชื่อมต่อกันทั่วโลก
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7" value="c"> ค. ระบบปฏิบัติการ
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q7" value="d"> ง. หน่วยความจำ
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">8.</span>World Wide Web (WWW) แตกต่างจากอินเทอร์เน็ตอย่างไร</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q8" value="a"> ก. อินเทอร์เน็ตเป็นส่วนหนึ่งของ WWW
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8" value="b"> ข. WWW เป็นส่วนหนึ่งของอินเทอร์เน็ต
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8" value="c"> ค. ทั้งสองอย่างเหมือนกัน
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q8" value="d"> ง. ไม่มีข้อถูก
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">9.</span>อีเมล (E-mail) ใช้สำหรับอะไร</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q9" value="a"> ก. ฟังเพลง
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9" value="b"> ข. ส่งข้อความและไฟล์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9" value="c"> ค. เล่นเกม
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q9" value="d"> ง. พิมพ์เอกสาร
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">10.</span>Cloud Storage คืออะไร</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q10" value="a"> ก. ที่เก็บข้อมูลในคอมพิวเตอร์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10" value="b"> ข. ที่เก็บข้อมูลบนอินเทอร์เน็ต
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10" value="c"> ค. ที่เก็บข้อมูลบนมือถือ
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q10" value="d"> ง. แฟลชไดรฟ์
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ส่วนที่ 3: ความปลอดภัยและจริยธรรมดิจิทัล -->
+                <div class="section">
+                    <h2 class="section-title">ส่วนที่ 3: ความปลอดภัยและจริยธรรมดิจิทัล</h2>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">11.</span>การตั้งรหัสผ่านที่ปลอดภัยควรมีลักษณะอย่างไร</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q11" value="a"> ก. ใช้ตัวเลขอย่างเดียว
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11" value="b"> ข. ใช้อักษรซ้ำกัน
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11" value="c"> ค. มีทั้งตัวอักษร ตัวเลข และสัญลักษณ์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q11" value="d"> ง. ใช้ชื่อเล่นของตนเอง
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">12.</span>ข้อใดเป็นมารยาทดิจิทัลที่ดี</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q12" value="a"> ก. ส่งข้อความรบกวนเพื่อนตลอดเวลา
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12" value="b"> ข. ใช้ข้อมูลผู้อื่นโดยไม่อ้างอิง
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12" value="c"> ค. ใช้คำสุภาพในการสื่อสารออนไลน์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q12" value="d"> ง. โพสต์ข้อมูลเท็จ
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">13.</span>ข้อใดเป็นภัยไซเบอร์</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q13" value="a"> ก. ไวรัสคอมพิวเตอร์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q13" value="b"> ข. เครื่องพิมพ์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q13" value="c"> ค. สแกนเนอร์
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q13" value="d"> ง. ไมโครโฟน
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">14.</span>การใช้ผลงานของผู้อื่นโดยไม่บอกที่มา เรียกว่าอะไร</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q14" value="a"> ก. การคัดลอกผลงาน (Plagiarism)
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q14" value="b"> ข. การสืบค้นข้อมูล
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q14" value="c"> ค. การสร้างสรรค์งานใหม่
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q14" value="d"> ง. การออกแบบชิ้นงาน
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">15.</span>ควรทำอย่างไรเมื่อต้องการดาวน์โหลดโปรแกรมจากอินเทอร์เน็ต</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q15" value="a"> ก. ดาวน์โหลดจากเว็บไซต์ไม่รู้จัก
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q15" value="b"> ข. ดาวน์โหลดจากเว็บไซต์ทางการ
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q15" value="c"> ค. ดาวน์โหลดจากลิงก์ที่ส่งมาโดยไม่ตรวจสอบ
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q15" value="d"> ง. ดาวน์โหลดจากโฆษณา
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ส่วนที่ 4: ถูก/ผิด -->
+                <div class="section">
+                    <h2 class="section-title">ส่วนที่ 4: ถูก/ผิด</h2>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">16.</span>CPU เป็นหน่วยแสดงผล (Output Device)</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q16" value="a"> ก. ถูก
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q16" value="b"> ข. ผิด
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">17.</span>การใช้ Wi-Fi สาธารณะควรระมัดระวังเรื่องความปลอดภัย</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q17" value="a"> ก. ถูก
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q17" value="b"> ข. ผิด
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">18.</span>RAM เป็นหน่วยความจำที่เก็บข้อมูลได้ถาวร</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q18" value="a"> ก. ถูก
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q18" value="b"> ข. ผิด
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">19.</span>การแชร์รหัสผ่านกับเพื่อนถือเป็นการใช้เทคโนโลยีอย่างปลอดภัย</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q19" value="a"> ก. ถูก
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q19" value="b"> ข. ผิด
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <div class="question-text"><span class="question-number">20.</span>การใช้เทคโนโลยีดิจิทัลควรคำนึงถึงผลกระทบต่อผู้อื่น</div>
+                        <div class="options">
+                            <label class="option">
+                                <input type="radio" name="q20" value="a"> ก. ถูก
+                            </label>
+                            <label class="option">
+                                <input type="radio" name="q20" value="b"> ข. ผิด
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn">ส่งคำตอบ</button>
+                </div>
+            </form>
+            
+            <div class="results" id="results">
+                <div class="score" id="scoreDisplay"></div>
+                <div class="score-text" id="scoreText"></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // เฉลย
+        const answers = {
+            q1: 'c', q2: 'b', q3: 'b', q4: 'a', q5: 'c',
+            q6: 'a', q7: 'b', q8: 'b', q9: 'b', q10: 'b',
+            q11: 'c', q12: 'c', q13: 'a', q14: 'a', q15: 'b',
+            q16: 'b', q17: 'a', q18: 'b', q19: 'b', q20: 'a'
+        };
+
+        // เลือกตัวเลือก
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                // ลบการเลือกก่อนหน้า
+                const name = radio.name;
+                document.
